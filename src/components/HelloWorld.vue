@@ -29,23 +29,7 @@
 
     </div>
     <hr>
-    <div class="row">
-      <div class="col">
-        <h4>Websocket Async</h4>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <button type="button" class="btn btn-primary">Tracking</button>
-      </div>
-      <div class="col">
-        <button type="button" class="btn btn-primary">Rate</button>
-      </div>
-      <div class="col">
-        <button type="button" class="btn btn-primary">Check Status</button>
-      </div>
 
-    </div>
   </div>
 </template>
 
@@ -60,7 +44,7 @@ export default {
       message: "",
       status: "",
       rate: {
-              "delivery": "fdex",
+              "delivery": "fedex",
               "shipper": {
                   "name": "Sender",
                   "company": "Company",
@@ -97,11 +81,16 @@ export default {
   },
   created: function(){
     console.log("Home created")
+    let socket = new WebSocket("ws://localhost:3000/cable/messages");
+    console.log(socket)
+    //this.sockets.subscribe('messages', (data) => {
+    //  this.msg = data.message;
+    //});
 
   },
   methods: {
     tracking(){
-      this.$http.get('http://localhost:3000/delivery_tracking/tracking/fdex/287383').then(response => {
+      this.$http.get('http://localhost:3000/delivery_tracking/tracking/fedex/287383').then(response => {
         console.log(response)
         this.message = response.body;
       }, response => {
@@ -122,7 +111,7 @@ export default {
       });
     },
     check_status(){
-      this.$http.get('http://localhost:3000/delivery_tracking/satatus_delivery/fdex/287383').then(response => {
+      this.$http.get('http://localhost:3000/delivery_tracking/satatus_delivery/fedex/287383').then(response => {
         console.log(response)
         this.message = response.body;
         this.status = response.status
