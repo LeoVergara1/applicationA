@@ -2,6 +2,16 @@
   <div class="container">
     <div class="row">
       <div class="col">
+        <div class="form-group">
+          <label for=""></label>
+          <input type="text"
+            class="form-control" name="" id="" aria-describedby="helpId" placeholder="Número de Guía" v-model="track_number">
+          <small id="helpId" class="form-text text-muted"></small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <button type="button" class="btn btn-primary" @click="tracking()">Tracking</button>
       </div>
       <div class="col">
@@ -43,6 +53,7 @@ export default {
     return {
       message: "",
       status: "",
+      track_number: "",
       rate: {
               "delivery": "fedex",
               "shipper": {
@@ -90,9 +101,9 @@ export default {
   },
   methods: {
     tracking(){
-      this.$http.get('http://localhost:3000/delivery_tracking/tracking/fedex/287383').then(response => {
+      this.$http.get(`http://localhost:3000/delivery_tracking/tracking/fedex/${this.track_number}`).then(response => {
         console.log(response)
-        this.message = response.body;
+        this.message = response.body
       }, response => {
         console.log(response)
         this.message = response.body;
@@ -111,7 +122,7 @@ export default {
       });
     },
     check_status(){
-      this.$http.get('http://localhost:3000/delivery_tracking/satatus_delivery/fedex/287383').then(response => {
+      this.$http.get(`http://localhost:3000/delivery_tracking/satatus_delivery/fedex/${this.track_number}`).then(response => {
         console.log(response)
         this.message = response.body;
         this.status = response.status
